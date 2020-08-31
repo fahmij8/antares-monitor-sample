@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href='./materialize/css/materialize.min.css'>
     <link type="text/css" rel="stylesheet" href='./materialize/css/custom.css'>
+    <meta name="theme-color" content="#90caf9" />
+    <link rel="apple-touch-icon" href="./materialize/1.png" />
+    <link rel="shortcut icon" href="./materialize/1.png" />
 </head>
 <body>
     <header>
