@@ -74,8 +74,15 @@ $(window).on('load', () => {
 
     // Chart
     let convertData = (jsdata) => {
+        let addZero = (i) => {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
         let today = new Date();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let time = addZero(today.getHours()) + ":" + addZero(today.getMinutes()) + ":" + addZero(today.getSeconds());
         
         if (labels.length > 4){
             labels.shift()
