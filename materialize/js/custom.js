@@ -15,30 +15,24 @@ $(window).on('load', () => {
     const data4 = document.getElementById("data4") 
 
     // Inisialisasi fungsi mengambil data dari API
-    getData = async () => {
-        await $.ajax({
-        url : 'get.php',
-        type : 'GET',
-            success : (success) => {
-                data = success
-            },
-            error : (error) => {
-                console.log(error)
-                M.toast({html: "Error while getting data!"})
-            }
-        });
-    }
-
-    // Menjalankan fungsi get data di awal load page
-    data = getData()
-    if(data === 0){
-        data = getData()
+    getData = () => {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+            url : 'get.php',
+            type : 'GET',
+                success : (res) => {
+                    resolve(res)
+                },
+                error : (res) => {
+                    reject(res)
+                }
+            })
+        })
     }
 
     // Update HTML dari data API
     const update = () => {
-        let js_data = JSON.parse(JSON.parse(data))
-        let js_obj_data = JSON.parse(js_data["m2m:cin"].con)
+        let js_obj_data = JSON.parse(data["m2m:cin"].con)
 
         convertData(js_obj_data)
 
@@ -46,6 +40,7 @@ $(window).on('load', () => {
         data2.innerHTML = js_obj_data["pH"]
         data3.innerHTML = js_obj_data["Suhu"]
         data4.innerHTML = js_obj_data["Kelembaban"]
+
         M.toast({html: "Data Updated!"})
     }
 
@@ -57,7 +52,14 @@ $(window).on('load', () => {
         data4.innerHTML = "Loading data..."
         setTimeout(() => {
             getData()
-            update()
+                .then((result) => {
+                    data = JSON.parse(JSON.parse(result))
+                    update()
+                })
+                .catch((error) => {
+                    console.log(error)
+                    M.toast({html: "Error while getting data!"})
+                })
         }, 1000)
     }
 
