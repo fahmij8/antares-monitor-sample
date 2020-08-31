@@ -16,12 +16,17 @@ $(window).on('load', () => {
 
     // Inisialisasi fungsi mengambil data dari API
     getData = async () => {
-        let makeRequest = new XMLHttpRequest()
-        makeRequest.onload = function() {
-            data = this.responseText        
-        }
-        makeRequest.open("get", "get.php", true)
-        makeRequest.send()
+           $.ajax({
+                url : 'get.php',
+                type : 'POST',
+                success : (success) => {
+                    data = success
+                },
+                error : (error) => {
+                    console.log(error)
+                    alert("Error getting data")
+                }
+           });
         data1.innerHTML = "Loading data..."
         data2.innerHTML = "Loading data..."
         data3.innerHTML = "Loading data..."
