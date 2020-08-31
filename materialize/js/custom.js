@@ -16,25 +16,21 @@ $(window).on('load', () => {
 
     // Inisialisasi fungsi mengambil data dari API
     getData = async () => {
-           $.ajax({
-                url : 'get.php',
-                type : 'POST',
-                success : (success) => {
-                    data = success
-                },
-                error : (error) => {
-                    console.log(error)
-                    alert("Error getting data")
-                }
-           });
-        data1.innerHTML = "Loading data..."
-        data2.innerHTML = "Loading data..."
-        data3.innerHTML = "Loading data..."
-        data4.innerHTML = "Loading data..."
+        await $.ajax({
+        url : 'get.php',
+        type : 'GET',
+            success : (success) => {
+                data = success
+            },
+            error : (error) => {
+                console.log(error)
+                M.toast({html: "Error while getting data!"})
+            }
+        });
     }
 
     // Menjalankan fungsi get data di awal load page
-    data = getData();
+    getData()
 
     // Update HTML dari data API
     const update = () => {
@@ -47,10 +43,15 @@ $(window).on('load', () => {
         data2.innerHTML = js_obj_data["pH"]
         data3.innerHTML = js_obj_data["Suhu"]
         data4.innerHTML = js_obj_data["Kelembaban"]
+        M.toast({html: "Data Updated!"})
     }
 
     // Inisialisasi fungsi run 
     const run = () => {
+        data1.innerHTML = "Loading data..."
+        data2.innerHTML = "Loading data..."
+        data3.innerHTML = "Loading data..."
+        data4.innerHTML = "Loading data..."
         setTimeout(() => {
             getData()
             update()
@@ -63,7 +64,6 @@ $(window).on('load', () => {
     // Memberikan attribut onclick pada elemen dengan id upd (button update)
     $("#upd").click(function() {
         run()
-        M.toast({html: "Data Updated!"})
     })
     
 
