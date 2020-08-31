@@ -31,6 +31,9 @@ $(window).on('load', () => {
 
     // Menjalankan fungsi get data di awal load page
     data = getData()
+    if(data === 0){
+        data = getData()
+    }
 
     // Update HTML dari data API
     const update = () => {
